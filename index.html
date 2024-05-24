@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- icon -->
+		<script
+			src="https://kit.fontawesome.com/20da3996d8.js"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- tailwind and set default style -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style type="text/tailwindcss">
+			@layer base {
+				h1 {
+					@apply font-semibold;
+					@apply text-center;
+				}
+				h2 {
+					@apply text-2xl;
+					@apply font-semibold;
+					@apply text-center;
+					@apply pb-2;
+				}
+				h3 {
+					@apply text-2xl;
+					@apply font-semibold;
+				}
+				button {
+					@apply rounded-lg;
+				}
+				img {
+					@apply w-full;
+					@apply object-cover;
+				}
+				:hover {
+					@apply transition duration-300;
+				}
+				* {
+					@apply duration-300;
+				}
+			}
+		</style>
+
+		<script src="script.js" defer></script>
+		<title>31-vicky-js</title>
+	</head>
+	<body class="text-neutral-700">
+		<h1 class="text-4xl m-6">Shopping Cart</h1>
+
+		<!--------------- input & dashboard --------------->
+		<div class="flex w-full gap-4 px-60">
+			<!-- input -->
+			<section
+				id="inputForm"
+				class="bg-sky-50 border border-sky-300 w-1/3 p-6 h-fit rounded-xl"
+			>
+				<h2>Add Product</h2>
+				<form id="form" class="flex flex-col gap-3">
+					<div>
+						<label for="productName" class="text-xl">Product name</label>
+						<input
+							type="text"
+							name="productName"
+							id="productName"
+							minlength="3"
+							maxlength="255"
+							class="w-full p-1 border border-neutral-300 rounded"
+							required
+							autocomplete="off"
+						/>
+					</div>
+
+					<div>
+						<label for="price" class="text-xl">Price</label>
+						<input
+							type="number"
+							step="0.01"
+							min="0.01"
+							name="price"
+							id="price"
+							class="w-full p-1 border border-neutral-300 rounded"
+							required
+						/>
+					</div>
+
+					<div>
+						<label for="image" class="text-xl">Image Url</label>
+						<input
+							type="url"
+							name="image"
+							id="image"
+							class="w-full p-1 border border-neutral-300 rounded"
+							required
+						/>
+					</div>
+
+					<p id="inputError" class="text-red-500 font-bold"></p>
+
+					<div class="flex w-full gap-2">
+						<button type="submit" class="bg-blue-500 text-white w-full p-3">
+							Create Product
+						</button>
+						<button type="reset" class="bg-red-500 text-white w-full p-3">
+							Reset
+						</button>
+					</div>
+				</form>
+			</section>
+
+			<!-- dashboard -->
+			<section
+				id="dashboard"
+				class="bg-sky-50 border border-sky-300 w-2/3 p-4 rounded-xl"
+			>
+				<h2>Product Dashboard</h2>
+				<div
+					id="productDashboard"
+					class="flex flex-col gap-2 h-96 p-3 overflow-y-scroll"
+				>
+					<!-- each product here -->
+				</div>
+				<button
+					id="addToCard"
+					type="button"
+					class="bg-blue-500 text-white w-full p-3 mt-5"
+				>
+					Add to Card
+				</button>
+			</section>
+		</div>
+
+		<!--------------- cart --------------->
+		<!-- bg -->
+		<div
+			id="cart-screen"
+			class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center hidden"
+		>
+			<!-- box -->
+			<section id="cart" class="bg-white w-1/2 rounded-3xl p-4 relative">
+				<h2>Your Cart</h2>
+				<button
+					onclick="showPopup('cart-screen')"
+					class="absolute top-4 right-6"
+				>
+					<i class="fa-solid fa-xmark text-2xl"></i>
+				</button>
+				<div
+					id="productCart"
+					class="flex flex-col gap-2 h-96 p-3 overflow-y-scroll"
+				>
+					<!-- each product in cart here -->
+					<!-- cart template -->
+					<!-- <div
+						id="cartCard"
+						class="flex h-40 w-full border border-neutral-500 rounded-xl overflow-hidden bg-white"
+					>
+						<img
+							src="https://static.vecteezy.com/system/resources/thumbnails/025/181/412/small/picture-a-captivating-scene-of-a-tranquil-lake-at-sunset-ai-generative-photo.jpg"
+							alt=""
+							class="w-1/3"
+						/>
+						<div
+							id="productInfo"
+							class="flex flex-col w-2/3 p-4 justify-center"
+						>
+							<h3>hello</h3>
+							<p>12345</p>
+						</div>
+						<button
+							id="deleteBtn"
+							class="bg-red-500 text-white p-3 h-fit my-auto mr-4"
+						>
+							Delete
+						</button>
+					</div> -->
+				</div>
+				<button
+					id="calculatePrice"
+					type="button"
+					class="bg-blue-500 text-white w-full p-3 rounded mt-5 mb-2"
+				>
+					Calculate Final Price
+				</button>
+			</section>
+		</div>
+
+		<!--------------- price --------------->
+		<!-- bg -->
+		<div
+			id="final-price-screen"
+			class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center hidden"
+		>
+			<!-- box -->
+			<section
+				id="finalPrice"
+				class="flex justify-center items-center bg-white w-1/3 h-1/3 rounded-3xl p-4 relative"
+			>
+				<h2 id="popupMessage"></h2>
+				<button
+					onclick="showPopup('final-price-screen')"
+					class="absolute top-4 right-6"
+				>
+					<i class="fa-solid fa-xmark text-2xl"></i>
+				</button>
+			</section>
+		</div>
+	</body>
+</html>
