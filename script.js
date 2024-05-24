@@ -104,17 +104,20 @@ function renderDashboard(product) {
 
 	// productCard > productContent > productInfo
 	const productInfo = document.createElement("div");
-	productInfo.classList = "flex flex-col gap-2 w-2/3 p-4 justify-center";
+	productInfo.classList =
+		"flex flex-col gap-1 w-2/3 m-4 justify-center overflow-hidden";
 	productContent.appendChild(productInfo);
 
 	// productCard > productContent > productInfo > productName
 	const productName = document.createElement("h3");
 	productName.textContent = product.name;
+	productName.classList = "text-ellipsis overflow-hidden";
 	productInfo.appendChild(productName);
 
 	// productCard > productContent > productInfo > productPrice
 	const productPrice = document.createElement("p");
 	productPrice.textContent = usCurrency(product.price);
+	productPrice.classList = "text-ellipsis overflow-hidden";
 	productInfo.appendChild(productPrice);
 }
 
@@ -173,17 +176,20 @@ function renderCard(product) {
 
 	// cartCard > cardInfo
 	const cardInfo = document.createElement("div");
-	cardInfo.classList = "flex flex-col w-2/3 p-4 justify-center";
+	cardInfo.classList =
+		"flex flex-col gap-1 w-2/3 m-4 justify-center overflow-hidden";
 	cartCard.appendChild(cardInfo);
 
 	// cartCard > cardInfo > cardName
 	const cardName = document.createElement("h3");
 	cardName.textContent = product.name;
+	cardName.classList = "text-ellipsis overflow-hidden";
 	cardInfo.appendChild(cardName);
 
 	// cartCard > cardInfo > cardPrice
 	const cardPrice = document.createElement("p");
 	cardPrice.textContent = usCurrency(product.price);
+	cardPrice.classList = "text-ellipsis overflow-hidden";
 	cardInfo.appendChild(cardPrice);
 
 	// cartCard > deleteBtn
