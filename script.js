@@ -9,7 +9,7 @@
 // รับ input เข้ามา ใส่ในตัวแปร
 // เอาตัวแปรเก็บใน obj ของ product นั้น แล้วเก็บรวมไว้ใน array ของ product อีกที
 // ต้องมี id ของแต่ล่ะ product ด้วย เอาไว้ค้นหาง่ายๆ
-// ต้องมี checkbox status ด้วย เวลา check ก็ให้มาอัพเดทค่าตรงนี้
+// ต้องมี id ของแต่ล่ะ product ด้วย เอาไว้ค้นหาง่ายๆ
 // พอกด create ก็ต้อง render ออกมา
 // แล้วก็รีเซ็ตค่าใน input
 
@@ -126,9 +126,112 @@ function renderDashboard(product) {
 // แล้วก็ foreach ให้ product ใน cartList แต่ล่ะตัวเข้าไปทำ function render
 // ก็ควรจะได้ product ออกมาเหมือนตอน dashboard
 
+// ---------- add checked product to cartList ---------- //
+document
+	.getElementById("addToCard")
+	.addEventListener("click", function (event) {
+		event.preventDefault();
+
+		productCart.innerHTML = ""; // set ให้เป็นค่าว่างก่อน ไม่งั้นจะ stack
+
+		// reassign ค่า
+		cartList = productList.filter((product) => product.checkbox === true);
+
+		cartList.forEach((product) => renderCard(product));
+
+		// ถ้ายังไม่ได้เพิ่ม product ให้ error
+		if (productList.length === 0) {
+			popupMessage.textContent =
+				"You don't have any products in your dashboard.";
+			return showPopup("final-price-screen");
+		}
+
+		// ถ้ายังไม่ได้ check ก็ให้ error
+		if (cartList.length === 0) {
+			popupMessage.textContent = "You haven't selected any products yet.";
+			return showPopup("final-price-screen");
+		}
+
+		showPopup("cart-screen");
+	});
+
+// ---------- render cart ---------- //
+function renderCard(product) {
+	// productCart(html) > cartCard
+	const cartCard = document.createElement("div");
+	cartCard.id = `product-${product.id}`;
+	cartCard.classList =
+		"flex min-h-32 max-h-32 w-full border border-neutral-500 rounded-xl overflow-hidden bg-white";
+	productCart.appendChild(cartCard);
+
+	// cartCard > cardImage
+	const cardImage = document.createElement("img");
+	cardImage.src = product.image;
+	cardImage.alt = product.name;
+	cardImage.classList = "w-1/3";
+	cartCard.appendChild(cardImage);
+
+	// cartCard > cardInfo
+	const cardInfo = document.createElement("div");
+	cardInfo.classList = "flex flex-col w-2/3 p-4 justify-center";
+	cartCard.appendChild(cardInfo);
+
+	// cartCard > cardInfo > cardName
+	const cardName = document.createElement("h3");
+	cardName.textContent = product.name;
+	cardInfo.appendChild(cardName);
+
+	// cartCard > cardInfo > cardPrice
+	const cardPrice = document.createElement("p");
+	cardPrice.textContent = usCurrency(product.price);
+	cardInfo.appendChild(cardPrice);
+
+	// cartCard > deleteBtn
+	const deleteBtn = document.createElement("button");
+	deleteBtn.textContent = "Button";
+	deleteBtn.classList = "bg-red-500 text-white p-3 h-fit my-auto mr-4 rounded";
+	deleteBtn.onclick = function () {
+		deleteProduct(product);
+	};
+	cartCard.appendChild(deleteBtn);
+}
+
 // -------------------- delete product in cart -------------------- //
+// ตอนสร้าง card ของแต่ล่ะ product ใน cart ใส่ id ด้วย เป็น id ของ product
+// ตอนกดลบก็ให้ class ของ card นั้นเป็น hidden
+// find index ของ product ใน cartList จาก product.id
+// แล้วก็ใช้ Splice ลบ ออกจาก cart list
+function deleteProduct(product) {
+	document.getElementById(`product-${product.id}`).classList = "hidden";
+
+	let deleteProduct = cartList.find((item) => item.id === product.id);
+
+	let deleteIndex = cartList.findIndex((item) => item === deleteProduct);
+
+	cartList.splice(deleteIndex, 1);
+}
 
 // -------------------- calculate product price -------------------- //
+// พอกดก็ใช้ ruduce ในการ sum price จากใน cartList
+
+document
+	.getElementById("calculatePrice")
+	.addEventListener("click", function (event) {
+		event.preventDefault();
+
+		const finalPrice = cartList.reduce((acc, product) => {
+			return acc + parseFloat(product.price);
+		}, 0);
+
+		showPopup("final-price-screen");
+		popupMessage.textContent = `You have to pay: ${usCurrency(finalPrice)}`;
+	});
+
+// -------------------- popup -------------------- //
+function showPopup(id) {
+	const element = document.getElementById(id);
+	element.classList.toggle("hidden");
+}
 
 // -------------------- validating image -------------------- //
 // allow jpg, png, gif
