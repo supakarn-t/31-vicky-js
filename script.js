@@ -236,6 +236,7 @@ document
 function showPopup(id) {
 	const element = document.getElementById(id);
 	element.classList.toggle("hidden");
+	element.classList.toggle("flex");
 }
 
 // -------------------- validating image -------------------- //
