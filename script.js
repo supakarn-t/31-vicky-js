@@ -194,8 +194,9 @@ function renderCard(product) {
 
 	// cartCard > deleteBtn
 	const deleteBtn = document.createElement("button");
-	deleteBtn.textContent = "Delete";
-	deleteBtn.classList = "bg-red-500 text-white p-3 h-fit my-auto mr-4 rounded";
+	deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i> Delete`;
+	deleteBtn.classList =
+		"bg-red-500 text-white p-3 w-40 h-fit my-auto mr-4 rounded hover:bg-red-700";
 	deleteBtn.onclick = function () {
 		deleteProduct(product);
 	};
@@ -229,6 +230,12 @@ document
 	.getElementById("calculatePrice")
 	.addEventListener("click", function (event) {
 		event.preventDefault();
+
+		// ถ้าลบทิ้งหมดแล้วก็ให้ error
+		if (cartList.length === 0) {
+			popupMessage.textContent = "You haven't selected any products yet.";
+			return showPopup("final-price-screen");
+		}
 
 		const finalPrice = cartList.reduce((acc, product) => {
 			return acc + parseFloat(product.price);

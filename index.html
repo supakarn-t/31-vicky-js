@@ -57,7 +57,7 @@
 			<!-- input -->
 			<section
 				id="inputForm"
-				class="bg-sky-50 border border-sky-300 w-80 p-6 h-fit rounded-xl"
+				class="bg-sky-50 border border-sky-300 w-96 p-6 h-fit rounded-xl"
 			>
 				<h2>Add Product</h2>
 				<form id="form" class="flex flex-col gap-3">
@@ -69,7 +69,7 @@
 							id="productName"
 							minlength="3"
 							maxlength="255"
-							class="w-full p-1 border border-neutral-300 rounded"
+							class="w-full p-1 px-3 border border-neutral-300 rounded"
 							required
 							autocomplete="off"
 						/>
@@ -83,7 +83,7 @@
 							min="0.01"
 							name="price"
 							id="price"
-							class="w-full p-1 border border-neutral-300 rounded"
+							class="w-full p-1 px-3 border border-neutral-300 rounded"
 							required
 						/>
 					</div>
@@ -94,7 +94,7 @@
 							type="url"
 							name="image"
 							id="image"
-							class="w-full p-1 border border-neutral-300 rounded"
+							class="w-full p-1 px-3 border border-neutral-300 rounded"
 							required
 						/>
 					</div>
@@ -102,10 +102,18 @@
 					<p id="inputError" class="text-red-500 font-bold"></p>
 
 					<div class="flex w-full gap-2">
-						<button type="submit" class="bg-blue-500 text-white w-full p-3">
+						<button
+							type="submit"
+							class="bg-blue-500 text-white w-full p-3 hover:bg-blue-700"
+						>
+							<i class="fa-solid fa-plus"></i>
 							Create Product
 						</button>
-						<button type="reset" class="bg-red-500 text-white w-full p-3">
+						<button
+							type="reset"
+							class="bg-red-500 text-white w-full p-3 hover:bg-red-700"
+						>
+							<i class="fa-solid fa-rotate-right"></i>
 							Reset
 						</button>
 					</div>
@@ -127,9 +135,9 @@
 				<button
 					id="addToCard"
 					type="button"
-					class="bg-blue-500 text-white w-full p-3 mt-5"
+					class="bg-blue-500 text-white w-full p-3 mt-5 hover:bg-blue-700"
 				>
-					Add to Card
+					<i class="fa-solid fa-cart-shopping"></i> Add to Card
 				</button>
 			</section>
 		</div>
@@ -158,8 +166,9 @@
 				<button
 					id="calculatePrice"
 					type="button"
-					class="bg-blue-500 text-white w-full p-3 rounded mt-5 mb-2"
+					class="bg-blue-500 text-white w-full p-3 rounded mt-5 mb-2 hover:bg-blue-700"
 				>
+					<i class="fa-solid fa-calculator"></i>
 					Calculate Final Price
 				</button>
 			</section>
