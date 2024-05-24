@@ -188,7 +188,7 @@ function renderCard(product) {
 
 	// cartCard > deleteBtn
 	const deleteBtn = document.createElement("button");
-	deleteBtn.textContent = "Button";
+	deleteBtn.textContent = "Delete";
 	deleteBtn.classList = "bg-red-500 text-white p-3 h-fit my-auto mr-4 rounded";
 	deleteBtn.onclick = function () {
 		deleteProduct(product);
@@ -201,14 +201,19 @@ function renderCard(product) {
 // ตอนกดลบก็ให้ class ของ card นั้นเป็น hidden
 // find index ของ product ใน cartList จาก product.id
 // แล้วก็ใช้ Splice ลบ ออกจาก cart list
+
 function deleteProduct(product) {
-	document.getElementById(`product-${product.id}`).classList = "hidden";
+	// document.getElementById(`product-${product.id}`).classList = "hidden";
 
-	let deleteProduct = cartList.find((item) => item.id === product.id);
+	// ถ้าใช้ .remove() จะลบทิ้งไปเลย
+	document.getElementById(`product-${product.id}`).remove();
 
-	let deleteIndex = cartList.findIndex((item) => item === deleteProduct);
+	// let deleteProduct = cartList.find((item) => item.id === product.id);
+	// let deleteIndex = cartList.findIndex((item) => item === deleteProduct);
+	// cartList.splice(deleteIndex, 1);
 
-	cartList.splice(deleteIndex, 1);
+	// อีกท่าใช้ filter เอาทุกอันยกเว้นตัวที่ id ตรง
+	cartList = cartList.filter((item) => item.id !== product.id);
 }
 
 // -------------------- calculate product price -------------------- //
